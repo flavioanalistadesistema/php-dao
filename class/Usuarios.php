@@ -2,6 +2,7 @@
 
 class Usuarios
 {
+    private $sql;
     private $iduser;
     private $deslogin;
     private $despassword;
@@ -47,19 +48,20 @@ class Usuarios
         return $this->dtregister = $dtregister;
     }
 
+    public function __construct()
+    {
+        $this->sql = new Sql();
+    }
+
     public function loadById($id)
     {
-        $sql = new Sql();
-        $usuario = $sql->select("SELECT * FROM tb_usuarios WHERE iduser = :ID", [
+        $usuario = $this->sql->select("SELECT * FROM tb_usuarios WHERE iduser = :ID", [
             ":ID"=> $id
         ]);
 
         if (count($usuario) > 0) {
-            $row = $usuario[0];
-            $this->setIduser($row['iduser']);
-            $this->setDeslogin($row['deslogin']); 
-            $this->setDespassword($row['despassword']);
-            $this->setDtregister(new datetime($row['dtregister']));
+
+            $this->setData($usuario[0]);
         }
     }
 
@@ -81,21 +83,37 @@ class Usuarios
 
     public function login($login, $despassword)
     {
-        $sql = new Sql();
-        $usuario = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin =:DESLOGIN and despassword =:DESPASSORD", [
+        $usuario = $this->sql->select("SELECT * FROM tb_usuarios WHERE deslogin =:DESLOGIN and despassword =:DESPASSORD", [
             ':DESLOGIN' => $login,
             ':DESPASSORD' => $despassword
         ]);
    
         if (count($usuario) > 0) {
-            $row = $usuario[0];
-            $this->setIduser($row['iduser']);
-            $this->setDeslogin($row['deslogin']); 
-            $this->setDespassword($row['despassword']);
-            $this->setDtregister(new datetime($row['dtregister']));
-        }else {
-            throw new Exception("Erro na senha e/ou login");
+
+            $this->setData($usuario[0]);
         }
+    }
+
+    public function insert()
+    {
+        $result = $this->sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", [
+            ':LOGIN' => $this->getDeslogin(),
+            ':PASSWORD' => $this->getDespassword()
+        ]);
+
+        if (count($result) > 0) {
+            
+            $this->setData($result[0]);
+
+        }
+    }
+
+    public function setData($data)
+    {
+        $this->setIduser($data['iduser']);
+        $this->setDeslogin($data['deslogin']); 
+        $this->setDespassword($data['despassword']);
+        $this->setDtregister(new datetime($data['dtregister']));
     }
 
     public function __toString()
