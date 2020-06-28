@@ -2,16 +2,15 @@
 
 require_once('config.php');
 
-/* retonar somente um usuario
-$usuario = new Usuarios();
-$usuario->loadById(20);
-echo $usuario;
-*/
+/* retonar somente um usuario */
+// $usuario = new Usuarios();
+// $usuario->loadById(1);
+// echo $usuario;
 
-/* retornar uma lista de usuario
-$userList = Usuarios::getList();
-echo $userList;
-*/
+
+/* retornar uma lista de usuario */
+// $userList = Usuarios::getList();
+// echo $userList;
 
 /* buscar usuarios filtro
 $search = Usuarios::search('dflu');
@@ -19,8 +18,16 @@ echo $search;
 */
 
 // loga usuario com login e senha
+// $usuario = new Usuarios();
+// $usuario->login('flaaos', '123');
+// echo $usuario;
+
+/** INSERIR DADOS E IMPRIMI-LO */
 $usuario = new Usuarios();
-$usuario->login('flaaps', 'e10adc3949ba59abbe56e057f20f883e');
+$usuario->setDeslogin('Luciana');
+$usuario->setDespassword('45679');
+$usuario->insert();
+
 echo $usuario;
 
 
