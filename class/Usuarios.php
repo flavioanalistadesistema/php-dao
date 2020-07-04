@@ -108,6 +108,19 @@ class Usuarios
         }
     }
 
+    public function update($login, $senha)
+    {
+        $this->setDeslogin($login);
+        $this->setDespassword($senha);
+
+        $this->sql->query("UPDATE tb_usuarios SET deslogin =:DESLOGIN, despassword =:DESPASSORD where iduser =:ID", [
+            ':DESLOGIN' => $this->getDeslogin(),
+            ':DESPASSORD' => $this->getDespassword(),
+            ':ID' => $this->getIduser()
+        ]);
+
+    }
+
     public function setData($data)
     {
         $this->setIduser($data['iduser']);

@@ -23,11 +23,16 @@ echo $search;
 // echo $usuario;
 
 /** INSERIR DADOS E IMPRIMI-LO */
-$usuario = new Usuarios();
-$usuario->setDeslogin('Luciana');
-$usuario->setDespassword('45679');
-$usuario->insert();
+// $usuario = new Usuarios();
+// $usuario->setDeslogin('Luciana');
+// $usuario->setDespassword('45679');
+// $usuario->insert();
+// echo $usuario;
 
-echo $usuario;
+$user = new Usuarios();
+$user->loadById(2);
+$user->update('Flaviao', '!@#');
+
+echo $user;
 
 
