@@ -29,9 +29,17 @@ echo $search;
 // $usuario->insert();
 // echo $usuario;
 
+/**UPDATE - atualizando os dados do usuario */
+// $user = new Usuarios();
+// $user->loadById(2);
+// $user->update('Flaviao', '!@#');
+// echo $user;
+
+/**DELETE - deletando usuario*/   
+
 $user = new Usuarios();
-$user->loadById(2);
-$user->update('Flaviao', '!@#');
+$user->loadById(3);
+$result = $user->delete();
 
 echo $user;
 

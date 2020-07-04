@@ -121,6 +121,18 @@ class Usuarios
 
     }
 
+    public function delete()
+    {
+        $result =  $this->sql->query("DELETE FROM tb_usuarios where iduser=:ID", [
+            ':ID' => $this->getIduser()
+        ]);
+
+        $this->setIduser(0);
+        $this->setDeslogin('');
+        $this->setDespassword('');
+        $this->setDtregister(new datetime());
+    }
+
     public function setData($data)
     {
         $this->setIduser($data['iduser']);
